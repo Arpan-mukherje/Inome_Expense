@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "320279152510",
+    "project_id": "income-expense-note",
+    "storage_bucket": "income-expense-note.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320279152510:android:3fe6d3bf2d01432f2f552f",
+        "android_client_info": {
+          "package_name": "com.cipherschools.assignment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwx02Eozq4MUcG_l73myLDUBzv1-krvxw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
