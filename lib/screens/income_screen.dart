@@ -25,7 +25,7 @@ class _ExpanceScreen extends State<ExpanceScreen> {
         iconTheme: IconThemeData(color: Colors.white),
         elevation: 0,
         title: Text(
-          "hello",
+          "Income-Expense",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Color.fromARGB(255, 68, 40, 255),
@@ -62,6 +62,7 @@ class _ExpanceScreen extends State<ExpanceScreen> {
                           ),
                           child: DropdownButtonFormField<String>(
                             decoration: const InputDecoration(
+                                border: InputBorder.none,
                                 disabledBorder: InputBorder.none),
                             borderRadius: BorderRadius.circular(20),
                             value: selectedOption1,
@@ -91,6 +92,7 @@ class _ExpanceScreen extends State<ExpanceScreen> {
                           ),
                           child: DropdownButtonFormField<String>(
                             decoration: const InputDecoration(
+                                border: InputBorder.none,
                                 disabledBorder: InputBorder.none),
                             value: selectedOption2,
                             onChanged: (String? newValue) {
@@ -134,10 +136,7 @@ class _ExpanceScreen extends State<ExpanceScreen> {
                                 description: description.text,
                                 month: widget.month);
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                            Navigator.pop(context);
                           },
                           child: const Text(
                             "Continue",

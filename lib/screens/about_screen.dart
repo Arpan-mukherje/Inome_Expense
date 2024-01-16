@@ -5,6 +5,17 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 240, 197),
+        title: Text("Logout"),
+      ),
+      body: Center(
+          child: Container(
+        height: 200,
+        width: 200,
+        color: Colors.teal,
+      )),
+    );
   }
 }

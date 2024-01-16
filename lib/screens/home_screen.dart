@@ -30,8 +30,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreen extends State<HomeScreen> {
   List<Transaction> transactions = [];
   String selectedMonth = DateFormat('MMMM').format(DateTime.now());
-  var finalIncome = 0;
-  var finalExpense = 0;
+
   List<Transaction> allTransactions = []; // Store the original list
 
   @override
@@ -162,11 +161,49 @@ class _HomeScreen extends State<HomeScreen> {
                     color: Colors.black,
                     size: 24,
                   ),
-                  Text(
-                    '${finalIncome - finalExpense}',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 22),
-                  ),
+                  StreamBuilder<QuerySnapshot>(
+                      stream: StorageServices.getData(selectedMonth),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator(); // or any other loading indicator
+                        }
+                        if (snapshot.hasError) {
+                          log('Error: ${snapshot.error}');
+                        }
+                        if (!snapshot.hasData) {
+                          return Container();
+                        }
+
+                        final List<DocumentSnapshot> documents =
+                            snapshot.data!.docs;
+                        var income = 0;
+                        var expense = 0;
+
+                        for (var i = 0; i < documents.length; i++) {
+                          Map<String, dynamic> data =
+                              documents[i].data() as Map<String, dynamic>;
+                          if (documents.isEmpty) {
+                            income = 0;
+                          }
+                          if (data['inputtype'] == "Income") {
+                            income = income +
+                                (data['inputamount'] != null
+                                    ? int.parse(data['inputamount'].toString())
+                                    : 0);
+                          } else if (data['inputtype'] == "Expense") {
+                            expense = expense +
+                                (data['inputamount'] != null
+                                    ? int.parse(data['inputamount'].toString())
+                                    : 0);
+                          }
+                        }
+                        return Text(
+                          '${income - expense}',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 22),
+                        );
+                      }),
                 ],
               ),
             ],
@@ -182,13 +219,13 @@ class _HomeScreen extends State<HomeScreen> {
                     stream: StorageServices.getData(selectedMonth),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator(); // or any other loading indicator
+                        return const CircularProgressIndicator(); // or any other loading indicator
                       }
                       if (snapshot.hasError) {
                         log('Error: ${snapshot.error}');
                       }
-                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return Container(); // Return an empty container or a placeholder if there is no data
+                      if (!snapshot.hasData) {
+                        return Container();
                       }
 
                       final List<DocumentSnapshot> documents =
@@ -209,7 +246,7 @@ class _HomeScreen extends State<HomeScreen> {
                                   : 0);
                         }
                       }
-                      finalIncome = income;
+
                       return Container(
                         margin: const EdgeInsets.all(8),
                         padding: const EdgeInsets.symmetric(
@@ -239,9 +276,9 @@ class _HomeScreen extends State<HomeScreen> {
                             Expanded(
                               child: Column(
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Income',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         color: Colors.white, fontSize: 17),
                                   ),
                                   Row(
@@ -281,12 +318,12 @@ class _HomeScreen extends State<HomeScreen> {
                         int expense = 0;
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return CircularProgressIndicator(); // or any other loading indicator
+                          return const CircularProgressIndicator(); // or any other loading indicator
                         }
                         if (snapshot.hasError) {
                           log('Error: ${snapshot.error}');
                         }
-                        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        if (!snapshot.hasData) {
                           return Container(); // Return an empty container or a placeholder if there is no data
                         }
 
@@ -297,6 +334,7 @@ class _HomeScreen extends State<HomeScreen> {
                           Map<String, dynamic> data =
                               documents[i].data() as Map<String, dynamic>;
                           if (data['inputamount'] == null || data.isEmpty) {
+                            log("gghhghff");
                             expense = 0;
                             break;
                           }
@@ -307,7 +345,7 @@ class _HomeScreen extends State<HomeScreen> {
                                     : 0);
                           }
                         }
-                        finalExpense = expense;
+
                         return Container(
                           margin: const EdgeInsets.all(8),
                           padding: const EdgeInsets.symmetric(
@@ -337,9 +375,9 @@ class _HomeScreen extends State<HomeScreen> {
                               Expanded(
                                 child: Column(
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Expense',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           color: Colors.white, fontSize: 17),
                                     ),
                                     Row(
@@ -378,23 +416,31 @@ class _HomeScreen extends State<HomeScreen> {
             child: StreamBuilder<QuerySnapshot>(
                 stream: StorageServices.getData(selectedMonth),
                 builder: (context, snapshot) {
-                  final List<DocumentSnapshot> documents = snapshot.data!.docs;
-                  return ListView.builder(
-                    //   reverse: true,
-                    itemCount: documents.length,
-                    itemBuilder: (context, index) {
-                      log(documents.length.toString());
-                      Map<String, dynamic> data =
-                          documents[index].data() as Map<String, dynamic>;
-                      return ListWidget(
-                        title: data['category'],
-                        desc: data['description'],
-                        ammount: data['inputamount'],
-                        inputType: data['inputtype'],
-                        time: "",
-                      );
-                    },
-                  );
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return Container(
+                      child: Center(
+                          child: Text("No Trasaction done in this month")),
+                    );
+                  } else {
+                    final List<DocumentSnapshot> documents =
+                        snapshot.data!.docs;
+                    return ListView.builder(
+                      //   reverse: true,
+                      itemCount: documents.length,
+                      itemBuilder: (context, index) {
+                        log(documents.length.toString());
+                        Map<String, dynamic> data =
+                            documents[index].data() as Map<String, dynamic>;
+                        return ListWidget(
+                          title: data['category'],
+                          desc: data['description'],
+                          ammount: data['inputamount'],
+                          inputType: data['inputtype'],
+                          time: "",
+                        );
+                      },
+                    );
+                  }
                 }),
           ),
           // const Expanded(
