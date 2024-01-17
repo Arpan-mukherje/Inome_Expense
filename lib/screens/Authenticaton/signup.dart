@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:assignment/Services/google_signup.dart';
 import 'package:assignment/screens/Authenticaton/login_screen.dart';
+import 'package:assignment/screens/first_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../Services/Firebase_services.dart/firebase_auth.dart';
@@ -18,7 +20,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-
+  bool isDone = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -175,7 +177,16 @@ class _SignUpState extends State<SignUp> {
             Padding(
               padding: const EdgeInsets.all(18),
               child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  Authmethod auth = Authmethod();
+                  await auth.googlesigninmeyhod(context).then((value) {
+                    log(value.toString());
+                    if (value == true) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));
+                    }
+                  });
+                },
                 style: OutlinedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   side: const BorderSide(color: Colors.grey),

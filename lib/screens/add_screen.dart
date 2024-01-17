@@ -1,3 +1,4 @@
+import 'package:assignment/Services/google_signup.dart';
 import 'package:assignment/screens/Authenticaton/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,6 +17,8 @@ class AddScreen extends StatelessWidget {
       body: Center(
           child: GestureDetector(
         onTap: () {
+          Authmethod auth = Authmethod();
+          auth.signout();
           FirebaseAuth.instance.signOut();
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => Login()));

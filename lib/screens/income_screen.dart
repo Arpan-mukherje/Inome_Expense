@@ -1,7 +1,5 @@
 import 'dart:developer';
-
 import 'package:assignment/Services/Firebase_services.dart/firestore_services.dart';
-import 'package:assignment/screens/first_page.dart';
 import 'package:flutter/material.dart';
 
 class ExpanceScreen extends StatefulWidget {
@@ -22,13 +20,13 @@ class _ExpanceScreen extends State<ExpanceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0,
-        title: Text(
+        title: const Text(
           "Income-Expense",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Color.fromARGB(255, 68, 40, 255),
+        backgroundColor: const Color.fromARGB(255, 68, 40, 255),
       ),
       body: SingleChildScrollView(
         child: Stack(
@@ -155,7 +153,7 @@ class _ExpanceScreen extends State<ExpanceScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "How much ?",
                     style: TextStyle(color: Colors.white70, fontSize: 18),
                   ),

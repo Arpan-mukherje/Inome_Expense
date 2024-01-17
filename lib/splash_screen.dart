@@ -16,8 +16,8 @@ class SplashScreen extends StatelessWidget {
       ),
 
       // backgroundColor: Colors.red,
-      nextScreen: SignUp(),
-      duration: 4000,
+      nextScreen: const SignUp(),
+      duration: 3000,
     );
   }
 }

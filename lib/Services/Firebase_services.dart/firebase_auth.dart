@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   static Future<UserCredential> signup(
@@ -11,7 +12,6 @@ class AuthService {
         email: email,
         password: password,
       );
-      //******************************************************/
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user?.uid)
@@ -20,7 +20,6 @@ class AuthService {
         'password': password,
         'email': email,
       });
-      //*******************************************************/
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -34,6 +33,24 @@ class AuthService {
       rethrow;
     }
   }
+  //****************************************************************************/
+
+
+  // void signInwithGoogle() async {
+  //   final FirebaseAuth _auth = FirebaseAuth.instance;
+  //   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  //   final FirebaseUser _user;
+  //   final GoogleSignInAccount? googleSignInAccount =
+  //       await _googleSignIn.signIn();
+  //   final GoogleSignInAuthentication googleSignInAuthentication =
+  //       await googleSignInAccount.authentication;
+  //   final AuthCredential credential = GoogleAuthProvider.getCredential(
+  //     accessToken: googleSignInAuthentication.accessToken,
+  //     idToken: googleSignInAuthentication.idToken,
+  //   );
+  //   await _auth.signInWithCredential(credential);
+  //   _user = await _auth.currentUser();
+  // }
 
   static Future<UserCredential?> login(String email, String password) async {
     try {
@@ -59,23 +76,7 @@ class AuthService {
       rethrow;
     }
   }
-
-  static Future<void> signOut() async {
-    try {
-      final auth = FirebaseAuth.instance;
-      await auth.signOut();
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        log('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        log('The account already exists for that email.');
-      }
-      rethrow;
-    } catch (e) {
-      log("From signout ->   $e");
-      rethrow;
-    }
-  }
+  //*******************************************************/
 
   static Future<void> _getAndStoreUserDetails(String userId) async {
     try {

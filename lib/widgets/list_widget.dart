@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ListWidget extends StatelessWidget {
@@ -36,11 +34,12 @@ class ListWidget extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.w700),
+                    style: const TextStyle(
+                        fontSize: 23, fontWeight: FontWeight.w700),
                   ),
                   Text(
                     desc,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                     ),
                   ),
@@ -58,7 +57,7 @@ class ListWidget extends StatelessWidget {
                       fontWeight: FontWeight.w500)),
               Text(
                 time,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                 ),
               ),

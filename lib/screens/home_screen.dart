@@ -1,10 +1,8 @@
 import 'dart:developer';
-
 import 'package:assignment/Services/Firebase_services.dart/firestore_services.dart';
 import 'package:assignment/screens/income_screen.dart';
 import 'package:assignment/widgets/list_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -57,7 +55,6 @@ class _HomeScreen extends State<HomeScreen> {
   void _filterByMonth() {
     final selectedYear = DateTime.now().year;
 
-    // Define a map to get the month index based on the month name
     final monthMap = {
       'January': 1,
       'February': 2,
@@ -166,7 +163,9 @@ class _HomeScreen extends State<HomeScreen> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const CircularProgressIndicator(); // or any other loading indicator
+                          return const Center(
+                              child:
+                                  CircularProgressIndicator()); // or any other loading indicator
                         }
                         if (snapshot.hasError) {
                           log('Error: ${snapshot.error}');
@@ -219,7 +218,9 @@ class _HomeScreen extends State<HomeScreen> {
                     stream: StorageServices.getData(selectedMonth),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator(); // or any other loading indicator
+                        return const Center(
+                            child:
+                                CircularProgressIndicator()); // or any other loading indicator
                       }
                       if (snapshot.hasError) {
                         log('Error: ${snapshot.error}');
@@ -318,13 +319,14 @@ class _HomeScreen extends State<HomeScreen> {
                         int expense = 0;
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const CircularProgressIndicator(); // or any other loading indicator
+                          return const Center(
+                              child: CircularProgressIndicator());
                         }
                         if (snapshot.hasError) {
                           log('Error: ${snapshot.error}');
                         }
                         if (!snapshot.hasData) {
-                          return Container(); // Return an empty container or a placeholder if there is no data
+                          return Container();
                         }
 
                         final List<DocumentSnapshot> documents =
@@ -411,15 +413,17 @@ class _HomeScreen extends State<HomeScreen> {
                       }))
             ],
           ),
-
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
                 stream: StorageServices.getData(selectedMonth),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                     return Container(
-                      child: Center(
-                          child: Text("No Trasaction done in this month")),
+                      child: const Center(
+                          child: Text(
+                        "No Trasaction done in this month",
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      )),
                     );
                   } else {
                     final List<DocumentSnapshot> documents =
@@ -443,17 +447,6 @@ class _HomeScreen extends State<HomeScreen> {
                   }
                 }),
           ),
-          // const Expanded(
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //     children: [
-          //       ListWidget(),
-          //       ListWidget(),
-          //       ListWidget(),
-          //       ListWidget()
-          //     ],
-          //   ),
-          // )
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -466,8 +459,6 @@ class _HomeScreen extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(30),
         ),
         onPressed: () {
-          // _showAddTransactionDialog(context, "Expense");
-          // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>))
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -498,87 +489,4 @@ class _HomeScreen extends State<HomeScreen> {
 
     return items;
   }
-
-  double _calculateFinalAmount() {
-    double income = 0.0;
-    double expense = 0.0;
-
-    for (var transaction in transactions) {
-      if (transaction.type == 'Income') {
-        income += transaction.amount;
-      } else {
-        expense += transaction.amount;
-      }
-    }
-
-    return income - expense;
-  }
-
-  void _showAddTransactionDialog(BuildContext context, String category) {
-    String title = "";
-    String amount = "";
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Add Expense"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                onChanged: (value) {
-                  title = value;
-                },
-                decoration: const InputDecoration(labelText: "Title"),
-              ),
-              TextField(
-                onChanged: (value) {
-                  amount = value;
-                },
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: "Amount"),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("Cancel"),
-            ),
-            TextButton(
-              onPressed: () {
-                _addTransaction(title, amount, category);
-                Navigator.of(context).pop();
-              },
-              child: const Text("Add"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _addTransaction(String title, String amount, String category) {
-    double parsedAmount = double.tryParse(amount) ?? 0.0;
-    int selectedMonthIndex = monthMap[selectedMonth] ?? 1; // Use the monthMap
-
-    // Create the new transaction with the correct date
-    Transaction newTransaction = Transaction(
-      title: title,
-      amount: parsedAmount,
-      date:
-          DateTime(DateTime.now().year, selectedMonthIndex, DateTime.now().day),
-      type: category,
-    );
-
-    setState(() {
-      allTransactions.add(newTransaction);
-      _filterByMonth();
-    });
-  }
 }
-
-//.........................................................................................

@@ -68,7 +68,7 @@ class _LoginState extends State<Login> {
         child: Column(
           children: [
             const SizedBox(
-              height: 60,
+              height: 80,
             ),
             Padding(
               padding: const EdgeInsets.all(15),
@@ -127,47 +127,47 @@ class _LoginState extends State<Login> {
             const SizedBox(
               height: 10,
             ),
-            const Center(
-              child: Text(
-                "or with",
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(18),
-              child: OutlinedButton(
-                onPressed: () {},
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  side: const BorderSide(color: Colors.grey),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  elevation: 0,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                  minimumSize: Size(
-                    MediaQuery.of(context).size.width * 0.8,
-                    MediaQuery.of(context).size.height * 0.07,
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/flat-color-icons_google.png',
-                      height: 24,
-                      width: 24,
-                    ),
-                    const SizedBox(width: 10),
-                    const Text(
-                      "Sign Up with Google",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // const Center(
+            //   child: Text(
+            //     "or with",
+            //     style: TextStyle(fontSize: 18),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.all(18),
+            //   child: OutlinedButton(
+            //     onPressed: () {},
+            //     style: OutlinedButton.styleFrom(
+            //       backgroundColor: Colors.transparent,
+            //       side: const BorderSide(color: Colors.grey),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(15),
+            //       ),
+            //       elevation: 0,
+            //       padding:
+            //           const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+            //       minimumSize: Size(
+            //         MediaQuery.of(context).size.width * 0.8,
+            //         MediaQuery.of(context).size.height * 0.07,
+            //       ),
+            //     ),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Image.asset(
+            //           'assets/flat-color-icons_google.png',
+            //           height: 24,
+            //           width: 24,
+            //         ),
+            //         const SizedBox(width: 10),
+            //         const Text(
+            //           "Sign Up with Google",
+            //           style: TextStyle(color: Colors.black, fontSize: 20),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             TextButton(
               onPressed: () {
                 Navigator.push(
