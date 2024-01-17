@@ -2,15 +2,15 @@ import 'dart:developer';
 import 'package:assignment/Services/Firebase_services.dart/firestore_services.dart';
 import 'package:flutter/material.dart';
 
-class ExpanceScreen extends StatefulWidget {
+class IncomeExpenseInputScreen extends StatefulWidget {
   final String month;
-  const ExpanceScreen({super.key, required this.month});
+  const IncomeExpenseInputScreen({super.key, required this.month});
 
   @override
-  _ExpanceScreen createState() => _ExpanceScreen();
+  _IncomeExpenseInputScreen createState() => _IncomeExpenseInputScreen();
 }
 
-class _ExpanceScreen extends State<ExpanceScreen> {
+class _IncomeExpenseInputScreen extends State<IncomeExpenseInputScreen> {
   String selectedOption1 = 'Expense';
   String selectedOption2 = 'Food';
   TextEditingController inputAmount = TextEditingController();
@@ -26,14 +26,14 @@ class _ExpanceScreen extends State<ExpanceScreen> {
           "Income-Expense",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color.fromARGB(255, 68, 40, 255),
+        backgroundColor: const Color.fromARGB(255, 0, 119, 255),
       ),
       body: SingleChildScrollView(
         child: Stack(
           children: [
             Container(
               height: MediaQuery.of(context).size.height,
-              color: const Color.fromARGB(255, 68, 40, 255),
+              color: const Color.fromARGB(255, 0, 119, 255),
               child: Padding(
                 padding: const EdgeInsets.only(top: 400),
                 child: Container(
@@ -121,7 +121,8 @@ class _ExpanceScreen extends State<ExpanceScreen> {
                         const SizedBox(height: 16),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(200, 40),
+                            minimumSize: Size(
+                                MediaQuery.of(context).size.height * 0.9, 50),
                             backgroundColor:
                                 const Color.fromARGB(255, 68, 40, 255),
                           ),

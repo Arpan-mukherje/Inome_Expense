@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:assignment/Services/Firebase_services.dart/firestore_services.dart';
-import 'package:assignment/screens/income_screen.dart';
+import 'package:assignment/screens/income_expense_input_screen.dart';
 import 'package:assignment/widgets/list_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -462,7 +462,7 @@ class _HomeScreen extends State<HomeScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ExpanceScreen(
+                  builder: (context) => IncomeExpenseInputScreen(
                         month: selectedMonth,
                       )));
         },

@@ -1,7 +1,7 @@
 import 'package:assignment/firebase_options.dart';
 import 'package:assignment/screens/Authenticaton/login_check.dart';
 import 'package:assignment/screens/first_page.dart';
-import 'package:assignment/screens/income_screen.dart';
+import 'package:assignment/screens/income_expense_input_screen.dart';
 import 'package:assignment/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
